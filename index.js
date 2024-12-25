@@ -6,22 +6,6 @@ const products = [
 
 const cart = [];
 
-function displayProducts() {
-    const productList = document.getElementById('product-list');
-    productList.innerHTML = '';
-    products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.className = 'product';
-        productDiv.innerHTML = `
-            <img src="${product.img}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>$${product.price.toFixed(2)}</p>
-            <button onclick="addToCart(${product.id})">Add to Cart</button>
-        `;
-        productList.appendChild(productDiv);
-    });
-}
-
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     cart.push(product);
@@ -54,5 +38,3 @@ function closeCart() {
 }
 
 document.getElementById('cart-btn').addEventListener('click', displayCart);
-
-displayProducts();
