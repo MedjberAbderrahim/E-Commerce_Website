@@ -1,0 +1,52 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+}
+
+.FormContainer {
+    text-align: center;
+    background-color: lightgray;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+#MiddleTitle {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.inputLabel {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.inputTag {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#SubmitButton {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+}
