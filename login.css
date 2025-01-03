@@ -21,10 +21,17 @@ body {
     color: #333;
 }
 
-.error {
-    color: red;
+.status {
     font-size: 14px;
     margin-bottom: 15px;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
 }
 
 .inputLabel {
@@ -42,11 +49,32 @@ body {
     border-radius: 4px;
 }
 
-#SubmitButton {
+#buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#buttonContainer input {
     padding: 10px 20px;
     border: none;
-    background-color: #007BFF;
     color: white;
     font-size: 16px;
     border-radius: 4px;
+}
+
+#SubmitButton {
+    background-color: #007BFF;
+}
+
+#SubmitButton:hover {
+    background-color: #0056b3;
+}
+
+#RegisterButton {
+    background-color: #28a745;
+}
+
+#RegisterButton:hover {
+    background-color: #1e7e34;
 }

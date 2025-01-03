@@ -3,37 +3,25 @@
     if (!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]) {
         header("Location: login.php");
     }
+    include 'Connect_DB.php';
 
-    $items = [
-        [
-            "id" => 1,
-            "name" => "F-16 Fighting Falcon",
-            "price" => 19.99,
-            "image" => "Assets/F-16_Fighting_Falcon.jpg"
-        ],
-        [
-            "id" => 2,
-            "name" => "F-22 Raptor",
-            "price" => 29.99,
-            "image" => "Assets/F-22_Raptor.jpg"
-        ],
-        [
-            "id" => 3,
-            "name" => "Mirage 2000",
-            "price" => 39.99,
-            "image" => "Assets/Mirage_2000C.jpg"
-        ],
-    ];
+    function load_products(PDO $pdo) {
+        $query = "SELECT * FROM Products";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute();
 
-    function displayProducts(){
-        global $items;
-        for ($i = 0; $i < count($items); $i++) {
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function displayProducts($pdo){
+        $products = load_products($pdo);
+        foreach ($products as $product) {
             echo '<div class="product">
-                    <img src="'.$items[$i]["image"].'" alt="'.$items[$i]["name"].'">
-                    <h3>'.$items[$i]["name"].'</h3>
-                    <p>$'.$items[$i]["price"].'</p>
-                    <button onclick="addToCart('.$items[$i]["id"].')">Add to Cart</button>
-                </div>';
+                <img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">
+                <h3>' . htmlspecialchars($product["Name"]) . '</h3>
+                <p>$' . htmlspecialchars($product["Price"]) . '</p>
+                <button onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>
+              </div>';
         }
     }
 ?>
@@ -57,7 +45,7 @@
 
 <main>
     <div class="products" id="product-list">
-        <?php displayProducts(); ?>
+        <?php displayProducts($pdo); ?>
     </div>
 </main>
 
