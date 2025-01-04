@@ -2,7 +2,7 @@
 include 'Connect_DB.php';
 
 function query_user(PDO $pdo, $username){
-    $sql = "SELECT * FROM Users WHERE username = :username";
+    $sql = "SELECT * FROM Users WHERE Username = :username";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
         "username" => $username
@@ -35,6 +35,8 @@ function login(PDO $pdo, $username, $password) {
 
     session_start();
     $_SESSION["isLoggedIn"] = true;
+    $_SESSION["username"] = $result['Username'];
+    $_SESSION["userID"] = $result['id'];
     header("Location: index.php");
     exit();
 }

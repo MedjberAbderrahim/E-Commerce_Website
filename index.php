@@ -13,15 +13,17 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function displayProducts($pdo){
+    function displayProducts($pdo) {
         $products = load_products($pdo);
         foreach ($products as $product) {
             echo '<div class="product">
-                <img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">
-                <h3>' . htmlspecialchars($product["Name"]) . '</h3>
-                <p>$' . htmlspecialchars($product["Price"]) . '</p>
-                <button onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>
-              </div>';
+                    <img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">
+                    <h3>' . htmlspecialchars($product["Name"]) . '</h3>
+                    <p>$' . htmlspecialchars($product["Price"]) . '</p>
+                    <button class="addToCart" onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>';
+            if ($_SESSION["username"] == 'admin')
+                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ')">Delete</button>';
+            echo '</div>';
         }
     }
 ?>
@@ -37,9 +39,19 @@
 
 <header>
     <h1 id="TitleHeader">El-Wawi Store</h1>
-    <div id="btns">
+    <h1 id="WelcomeHeader">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
+    <div id="headerButtonsContainer">
+        <?php if ($_SESSION["username"] == 'admin') : ?>
+            <button id="add-product" onclick="showAddProductModal()">Add Product</button>
+        <?php endif; ?>
         <button id="cart-btn">View Cart</button>
-        <a href="logout.php" id="disconnect-btn">Disconnect</a>
+        <div id="username-dropdown">
+            <button id="username-btn" onclick="toggleDropdown()">Account</button>
+            <div id="dropdown-menu" class="dropdown-content">
+                <a href="logout.php" id="disconnect-btn">Disconnect</a>
+                <a onclick="deleteAccount()" id="delete-account-btn">Delete Account</a>
+            </div>
+        </div>
     </div>
 </header>
 
@@ -57,7 +69,26 @@
     <button onclick="closeCart()">Close</button>
 </div>
 
-<script src="index.js"></script>
+<!-- The Add Product form -->
+<div id="add-product-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeAddProductModal()">&times;</span>
+        <h2>Add New Product</h2>
+        <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
+            <label for="product-name">Product Name:</label>
+            <input type="text" id="product-name" name="name" required>
 
+            <label for="product-price">Product Price:</label>
+            <input type="number" step="0.01" id="product-price" name="price" required>
+
+            <label for="product-image">Product Image:</label>
+            <input type="file" id="product-image" name="image" accept="image/*">
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script src="index.js"></script>
 </body>
 </html>

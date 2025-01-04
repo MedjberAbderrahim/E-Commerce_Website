@@ -27,6 +27,48 @@ function displayCart() {
     document.getElementById('cart-modal').style.display = 'block';
 }
 
+function deleteProduct(productId) {
+    if (confirm("Are you sure you want to delete this product?")) {
+        window.location.href = "delete_product.php?id=" + productId;
+    }
+}
+
+function showAddProductModal() {
+    document.getElementById("add-product-modal").style.display = "block";
+}
+
+function closeAddProductModal() {
+    document.getElementById("add-product-modal").style.display = "none";
+}
+
+// Close modal if user clicks outside the modal content
+window.onclick = function(event) {
+    let modal = document.getElementById("add-product-modal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+};
+
+function toggleDropdown() {
+    let dropdown = document.getElementById("dropdown-menu");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+
+function deleteAccount() {
+    if (confirm("Are you sure you want to delete your account? All your data will be deleted and the deletion cannot be undone.")) {
+        window.location.href = "delete_account.php";
+    }
+}
+
+// When I click anywhere other than the dropdown menu, it disappears away
+window.onclick = function(event) {
+    if (!event.target.matches('#username-btn')) {
+        let dropdown = document.getElementById("dropdown-menu");
+        if (dropdown.style.display === "block") {
+            dropdown.style.display = "none";
+        }
+    }
+}
 function removeFromCart(index) {
     cart.splice(index, 1);
     displayCart();
