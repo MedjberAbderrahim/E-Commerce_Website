@@ -5,16 +5,22 @@
     }
     include 'Connect_DB.php';
 
-    function load_products(PDO $pdo) {
-        $query = "SELECT * FROM Products";
-        $stmt = $pdo->prepare($query);
-        $stmt->execute();
+    function load_products(PDO $pdo, $searchQuery = null) {
+        if ($searchQuery) {
+            $query = "SELECT * FROM Products WHERE Name LIKE :searchQuery";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(':searchQuery', '%' . $searchQuery . '%', PDO::PARAM_STR);
+        } else {
+            $query = "SELECT * FROM Products";
+            $stmt = $pdo->prepare($query);
+        }
 
+        $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function displayProducts($pdo) {
-        $products = load_products($pdo);
+    function displayProducts($pdo, $searchQuery = null) {
+        $products = load_products($pdo, $searchQuery);
         foreach ($products as $product) {
             echo '<div class="product">
                     <img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">
@@ -56,11 +62,15 @@
 </header>
 
 <main>
+    <form id="search-form" method="GET" action="index.php">
+        <label for="search-bar"></label>
+        <input type="search" id="search-bar" name="query" placeholder="Enter product name..." />
+        <button type="submit" id="search-button">Search</button>
+    </form>
     <div class="products" id="product-list">
-        <?php displayProducts($pdo); ?>
+        <?php displayProducts($pdo, isset($_GET['query']) ? trim($_GET['query']) : null);?>
     </div>
 </main>
-
 <div id="cart-backdrop"></div>
 <div id="cart-modal">
     <h2>Your Cart</h2>
