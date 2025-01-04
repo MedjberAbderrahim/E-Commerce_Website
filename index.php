@@ -19,19 +19,22 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function displayProducts($pdo, $searchQuery = null) {
-        $products = load_products($pdo, $searchQuery);
-        foreach ($products as $product) {
-            echo '<div class="product">
-                    <img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">
-                    <h3>' . htmlspecialchars($product["Name"]) . '</h3>
-                    <p>$' . htmlspecialchars($product["Price"]) . '</p>
-                    <button class="addToCart" onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>';
-            if ($_SESSION["username"] == 'admin')
-                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ')">Delete</button>';
-            echo '</div>';
+function displayProducts($pdo, $searchQuery = null) {
+    $products = load_products($pdo, $searchQuery);
+    foreach ($products as $product) {
+        echo '<div class="product">';
+        echo '<a href="product.php?id=' . $product["id"] . '" class="product-link">';
+        echo '<img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">';
+        echo '<h3>' . htmlspecialchars($product["Name"]) . '</h3>';
+        echo '<p>$' . htmlspecialchars($product["Price"]) . '</p>';
+        echo '</a>';
+        echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ', event)">Add to Cart</button>';
+        if ($_SESSION["username"] == 'admin') {
+            echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ', event)">Delete</button>';
         }
+        echo '</div>';
     }
+}
 ?>
 
 <html lang="en">

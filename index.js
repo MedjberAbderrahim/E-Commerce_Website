@@ -6,7 +6,8 @@ const products = [
 
 const cart = [];
 
-function addToCart(productId) {
+function addToCart(productId, event) {
+    event.stopPropagation();
     const product = products.find(p => p.id === productId);
     cart.push(product);
     alert(`${product.name} added to cart!`);
@@ -27,7 +28,8 @@ function displayCart() {
     document.getElementById('cart-modal').style.display = 'block';
 }
 
-function deleteProduct(productId) {
+function deleteProduct(productId, event) {
+    event.stopPropagation();
     if (confirm("Are you sure you want to delete this product?")) {
         window.location.href = "delete_product.php?id=" + productId;
     }

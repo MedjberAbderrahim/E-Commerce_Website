@@ -283,6 +283,15 @@ header button:hover {
     padding: 20px;
 }
 
+.product-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.product-link:hover {
+    opacity: 0.8;
+}
+
 .product {
     border: 1px solid #ddd;
     border-radius: 5px;

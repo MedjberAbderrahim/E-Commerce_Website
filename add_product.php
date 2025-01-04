@@ -34,7 +34,10 @@ try {
         ':description' => $description,
         ':image' => $imagePath
     ]);
-    header("Location: index.php?message=Product+added+successfully");
+    $product_id = $pdo->lastInsertId();
+
+    header("Location: product.php?id=" . $product_id);
+    exit();
 }
 catch (PDOException $e) {
     die("Error: " . $e->getMessage());
