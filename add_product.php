@@ -26,17 +26,17 @@ if (!empty($_FILES['image']['name'])) {
 }
 
 try {
-    $query = "INSERT INTO Products (Name, Price, Description, Image) VALUES (:name, :price, :description, :image)";
+    $query = "INSERT INTO Products (Name, Price, Description, Image, Creation_Date) VALUES (:name, :price, :description, :image, :date)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([
         ':name' => $name,
         ':price' => $price,
         ':description' => $description,
-        ':image' => $imagePath
+        ':image' => $imagePath,
+        ':date' => date('Y-m-d')
     ]);
-    $product_id = $pdo->lastInsertId();
 
-    header("Location: product.php?id=" . $product_id);
+    header("Location: index.php");
     exit();
 }
 catch (PDOException $e) {

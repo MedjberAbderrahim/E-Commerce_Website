@@ -34,7 +34,10 @@ try {
 <div class="product-container">
     <div class="product-info">
         <h1><?php echo htmlspecialchars($product['Name']); ?></h1>
-        <p class="price">$<?php echo number_format($product['Price'], 2); ?></p>
+        <div class="price-container">
+            <p class="price">$<?php echo number_format($product['Price'], 2); ?></p>
+            <p class="creation-date"><?php echo 'Created on: ' . date('F j, Y', strtotime($product['Creation_Date'])); ?></p>
+        </div>
         <p class="description"><?php echo nl2br(htmlspecialchars($product['Description'])); ?></p>
     </div>
     <div class="product-image">
