@@ -14,6 +14,7 @@ include 'Connect_DB.php';
 
 $name = $_POST['name'];
 $price = $_POST['price'];
+$description = !empty($_POST['description']) ? $_POST['description'] : null;
 $imagePath = null;
 
 if (!empty($_FILES['image']['name'])) {
@@ -23,13 +24,14 @@ if (!empty($_FILES['image']['name'])) {
         die("Error uploading file.");
     }
 }
-echo 'HAHA2';
+
 try {
-    $query = "INSERT INTO Products (Name, Price, Image) VALUES (:name, :price, :image)";
+    $query = "INSERT INTO Products (Name, Price, Description, Image) VALUES (:name, :price, :description, :image)";
     $stmt = $pdo->prepare($query);
     $stmt->execute([
         ':name' => $name,
         ':price' => $price,
+        ':description' => $description,
         ':image' => $imagePath
     ]);
     header("Location: index.php?message=Product+added+successfully");

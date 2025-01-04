@@ -79,7 +79,6 @@
     <button onclick="closeCart()">Close</button>
 </div>
 
-<!-- The Add Product form -->
 <div id="add-product-modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeAddProductModal()">&times;</span>
@@ -90,6 +89,9 @@
 
             <label for="product-price">Product Price:</label>
             <input type="number" step="0.01" id="product-price" name="price" required>
+
+            <label for="product-description">Product Description:</label>
+            <textarea id="product-description" name="description" rows="5"></textarea>
 
             <label for="product-image">Product Image:</label>
             <input type="file" id="product-image" name="image" accept="image/*">

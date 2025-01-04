@@ -68,12 +68,20 @@ header button:hover {
     margin: 10px 0 5px;
 }
 
-#add-product-form input {
+#add-product-form input,
+#product-description {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+#product-description {
+    height: 150px;
+    max-width: 100%;
 }
 
 #add-product-form button {
