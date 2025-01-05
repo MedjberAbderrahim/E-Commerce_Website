@@ -2,8 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['userID'])) {
-    echo "You must be logged in to delete your account.";
-    exit();
+    die( "You are not logged in.");
 }
 
 include 'Connect_DB.php';
@@ -14,7 +13,5 @@ $sql = "DELETE FROM Users WHERE id = :userID";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['userID' => $userID]);
 
-session_destroy();
-
-header("Location: login.php");
+header("Location: logout.php");
 exit();

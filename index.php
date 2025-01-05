@@ -3,7 +3,7 @@
     if (!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]) {
         header("Location: login.php");
     }
-    include 'Connect_DB.php';
+    include 'functions/Connect_DB.php';
 
     function load_products(PDO $pdo, $searchQuery = null) {
         if ($searchQuery) {
@@ -57,7 +57,7 @@ function displayProducts($pdo, $searchQuery = null) {
         <div id="username-dropdown">
             <button id="username-btn" onclick="toggleDropdown()">Account</button>
             <div id="dropdown-menu" class="dropdown-content">
-                <a href="logout.php" id="disconnect-btn">Disconnect</a>
+                <a href="functions/logout.php" id="disconnect-btn">Disconnect</a>
                 <a onclick="deleteAccount()" id="delete-account-btn">Delete Account</a>
             </div>
         </div>
@@ -86,7 +86,7 @@ function displayProducts($pdo, $searchQuery = null) {
     <div class="modal-content">
         <span class="close" onclick="closeAddProductModal()">&times;</span>
         <h2>Add New Product</h2>
-        <form id="add-product-form" action="add_product.php" method="POST" enctype="multipart/form-data">
+        <form id="add-product-form" action="functions/add_product.php" method="POST" enctype="multipart/form-data">
             <label for="product-name">Product Name:</label>
             <input type="text" id="product-name" name="name" required>
 

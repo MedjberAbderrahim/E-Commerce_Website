@@ -1,14 +1,10 @@
 <?php
 session_start();
-if ($_SESSION["username"] !== 'admin') {
-    header("Location: index.php");
-    exit;
-}
+if ($_SESSION["username"] !== 'admin')
+    die( "You don't have permission to add products.");
 
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    header("Location: index.php");
-    exit();
-}
+if ($_SERVER["REQUEST_METHOD"] !== "POST")
+    die("Invalid request method.");
 
 include 'Connect_DB.php';
 
@@ -18,16 +14,22 @@ $description = !empty($_POST['description']) ? $_POST['description'] : null;
 $imagePath = null;
 
 if (!empty($_FILES['image']['name'])) {
-    $targetDir = "uploads/";
+    $targetDir = "../uploads/";
     $imagePath = $targetDir . basename($_FILES['image']['name']);
     if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
         die("Error uploading file.");
     }
 }
 
+// Re-updating file path, for database insertion
+$targetDir = "uploads/";
+$imagePath = $targetDir . basename($_FILES['image']['name']);
+
 try {
     $query = "INSERT INTO Products (Name, Price, Description, Image, Creation_Date) VALUES (:name, :price, :description, :image, :date)";
+
     $stmt = $pdo->prepare($query);
+
     $stmt->execute([
         ':name' => $name,
         ':price' => $price,
@@ -36,7 +38,7 @@ try {
         ':date' => date('Y-m-d')
     ]);
 
-    header("Location: index.php");
+    header("Location: ../index.php");
     exit();
 }
 catch (PDOException $e) {

@@ -33,5 +33,5 @@ $sql = "DELETE FROM Products WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['id' => $productId]);
 
-header("Location: index.php");
+header("Location: ../index.php");
 exit();

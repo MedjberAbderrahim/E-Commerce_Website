@@ -1,5 +1,5 @@
 <?php
-include 'Connect_DB.php';
+include 'functions/Connect_DB.php';
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     die("Invalid product ID.");

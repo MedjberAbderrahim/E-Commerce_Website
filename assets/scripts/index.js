@@ -31,7 +31,7 @@ function displayCart() {
 function deleteProduct(productId, event) {
     event.stopPropagation();
     if (confirm("Are you sure you want to delete this product?")) {
-        window.location.href = "delete_product.php?id=" + productId;
+        window.location.href = "functions/delete_product.php?id=" + productId;
     }
 }
 

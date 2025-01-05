@@ -40,7 +40,7 @@
         <h1 id='MiddleTitle'>Welcome</h1>
         <br><br>
         <?php display_status();?>
-        <form action="validate.php" method="POST">
+        <form action="functions/validate.php" method="POST">
             <label for="username" class="inputLabel">Username </label>
             <input type="text" name="username" class="inputTag">
             <br><br>
