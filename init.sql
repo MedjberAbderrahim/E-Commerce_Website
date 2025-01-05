@@ -8,7 +8,7 @@
 #     Password      varchar(60) not null,
 #     Creation_Date datetime     null
 # );
-# INSERT INTO Users (id, username, password, Creation_Date) VALUES (1, 'admin', '$2a$12$y4v2PJQYNLCwpig2D0IhpuSrpiEukeL.O9aKQLsqZPVvd4L5E3lj2', '2025-01-01 12:14:30');
+# INSERT INTO Users (id, username, password, Creation_Date) VALUES (1, 'admin', '$2a$12$y4v2PJQYNLCwpig2D0IhpuSrpiEukeL.O9aKQLsqZPVvd4L5E3lj2', '2025-01-01 12:14:30'); -- Credentials are (admin, admin).
 # SELECT * FROM Users;
 
 -- Creation of 'Products' Table

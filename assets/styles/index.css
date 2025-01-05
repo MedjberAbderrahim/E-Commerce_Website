@@ -275,58 +275,103 @@ header button:hover {
 
 .products {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
-    justify-content: center;
-    max-width: 1200px;
+    width: 1000px;
     margin: 0 auto;
     padding: 20px;
-}
-
-.product-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.product-link:hover {
-    opacity: 0.8;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 600px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 10px;
-    width: 200px;
-    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .product img {
-    width: 100%;
+    width: 120px;
     height: auto;
     border-radius: 5px;
 }
 
+.product-info {
+    flex-grow: 1;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product a {
+    text-decoration: none;
+    color: inherit;
+}
+
 .product button {
-    margin-top: 10px;
-    background-color: #28a745;
-    color: white;
-    border: none;
+    margin-left: 10px;
     padding: 10px 15px;
     cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
 }
 
-.product button.add-to-cart {
+.product .productName {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.product .productName:hover {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.product .productPrice {
+    font-size: 1.1em;
+    font-weight: 400;
+    color: #555;
+    margin-bottom: 8px;
+    font-style: italic;
+    transition: color 0.3s;
+}
+
+.product .productPrice:hover {
+    color: #28a745;
+}
+
+.product .addToCart {
     background-color: #28a745;
+    color: white;
 }
 
-.product button.add-to-cart:hover {
+.product .addToCart {
+    background-color: #28a745;
+    color: white;
+}
+
+.product .addToCart:hover {
     background-color: #218838;
 }
 
-.product button.delete {
+.product .delete {
     background-color: #dc3545;
+    color: white;
 }
 
-.product button.delete:hover {
+.product .delete:hover {
     background-color: #c82333;
 }

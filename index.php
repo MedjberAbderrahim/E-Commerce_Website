@@ -19,22 +19,31 @@
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-function displayProducts($pdo, $searchQuery = null) {
-    $products = load_products($pdo, $searchQuery);
-    foreach ($products as $product) {
-        echo '<div class="product">';
-        echo '<a href="product.php?id=' . $product["id"] . '" class="product-link">';
-        echo '<img src="' . htmlspecialchars($product["Image"]) . '" alt="' . htmlspecialchars($product["Name"]) . '">';
-        echo '<h3>' . htmlspecialchars($product["Name"]) . '</h3>';
-        echo '<p>$' . htmlspecialchars($product["Price"]) . '</p>';
-        echo '</a>';
-        echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ', event)">Add to Cart</button>';
-        if ($_SESSION["username"] == 'admin') {
-            echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ', event)">Delete</button>';
+    function displayProducts($pdo, $searchQuery = null) {
+        $products = load_products($pdo, $searchQuery);
+        foreach ($products as $product) {
+            $product_name = htmlspecialchars($product["Name"]);
+            if (strlen($product_name) > 50) {
+                $product_name = substr($product_name, 0, 50) . '...';
+            }
+            echo '<div class="product">';
+            echo '<div class="product-info">';
+            echo '<a href="product.php?id=' . $product["id"] . '" class="product-link">';
+            echo '<img src="' . htmlspecialchars($product["Image"]) . '" alt="">';
+            echo '<h3 class="productName">' . $product_name . '</h3>';
+            echo '<p class="productPrice">$' . htmlspecialchars($product["Price"]) . '</p>';
+            echo '</a>';
+            echo '</div>';
+
+            echo '<div class="product-buttons">';
+            echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ', event)">Add to Cart</button>';
+            if ($_SESSION["username"] == 'admin') {
+                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ', event)">Delete</button>';
+            }
+            echo '</div>';
+            echo '</div>';
         }
-        echo '</div>';
     }
-}
 ?>
 
 <html lang="en">
@@ -70,8 +79,9 @@ function displayProducts($pdo, $searchQuery = null) {
         <input type="search" id="search-bar" name="query" placeholder="Enter product name..." />
         <button type="submit" id="search-button">Search</button>
     </form>
+
     <div class="products" id="product-list">
-        <?php displayProducts($pdo, isset($_GET['query']) ? trim($_GET['query']) : null);?>
+        <?php displayProducts($pdo, isset($_GET['query']) ? trim($_GET['query']) : null); ?>
     </div>
 </main>
 <div id="cart-backdrop"></div>
