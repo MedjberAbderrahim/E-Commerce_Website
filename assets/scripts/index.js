@@ -1,7 +1,7 @@
 const products = [
-    { id: 1, name: "F-16 Fighting Falcon", price: 10.99, img: "Assets/F-16_Fighting_Falcon.jpg" },
-    { id: 2, name: "F-22 Raptor", price: 15.99, img: "Assets/F-22_Raptor.jpg" },
-    { id: 3, name: "Mirage 2000", price: 20.99, img: "Assets/Mirage_2000C.jpg" }
+    { id: 1, name: "F-16 Fighting Falcon", price: 10.99, img: "../images/F-16_Fighting_Falcon.jpg" },
+    { id: 2, name: "F-22 Raptor", price: 15.99, img: "../images/F-22_Raptor.jpg" },
+    { id: 3, name: "Mirage 2000", price: 20.99, img: "../images/Mirage_2000C.jpg" }
 ];
 
 const cart = [];

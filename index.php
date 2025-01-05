@@ -42,7 +42,7 @@ function displayProducts($pdo, $searchQuery = null) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El-Wawi Store</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="assets/styles/index.css">
 </head>
 <body>
 
@@ -104,6 +104,6 @@ function displayProducts($pdo, $searchQuery = null) {
     </div>
 </div>
 
-<script src="index.js"></script>
+<script src="assets/scripts/index.js"></script>
 </body>
 </html>

@@ -27,7 +27,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['Name']); ?></title>
-    <link rel="stylesheet" href="product.css">
+    <link rel="stylesheet" href="assets/styles/product.css">
 </head>
 <body>
 <a href="index.php" class="back-link">Back to Product List</a>

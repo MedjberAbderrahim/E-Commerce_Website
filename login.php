@@ -33,7 +33,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Page</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="assets/styles/login.css">
 </head>
 <body>
     <div class="FormContainer">
