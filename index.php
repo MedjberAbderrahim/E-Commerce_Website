@@ -40,12 +40,15 @@
 
     function display_cart(PDO $pdo) {
         $cartItems = load_cart($pdo);
+        $totalAmount = 0;
+
         if (empty($cartItems)) {
             echo '<li>Your cart is empty.</li>';
             return;
         }
 
         foreach ($cartItems as $item) {
+            $totalAmount += $item['Price'];
             echo '<li class="cart-item">';
             echo '<img src="' . htmlspecialchars($item['Image']) . '" alt="' . htmlspecialchars($item['Name']) . '" class="cart-item-image">';
             echo '<div class="cart-item-details">';
@@ -55,9 +58,10 @@
             echo '<button class="remove-from-cart" onclick="removeFromCart(' . $item['id'] . ')">Remove</button>';
             echo '</li>';
         }
+        echo '<div id="cart-total">Total: $' . htmlspecialchars(number_format($totalAmount, 2)) . '</div>';
     }
 
-    function displayProducts($pdo, $searchQuery = null) {
+function displayProducts($pdo, $searchQuery = null) {
         $products = load_products($pdo, $searchQuery);
         foreach ($products as $product) {
             $product_name = htmlspecialchars($product["Name"]);
@@ -76,7 +80,7 @@
             echo '<div class="product-buttons">';
             echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>';
             if ($_SESSION["username"] == 'admin') {
-                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ')">Delete</button>';
+                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ', event)">Delete</button>';
             }
             echo '</div>';
             echo '</div>';
@@ -130,10 +134,14 @@
 <div id="cart-backdrop"></div>
 <div id="cart-modal">
     <h2>Your Cart</h2>
-    <ul id="cart-items">
-        <?php display_cart($pdo); ?>
-    </ul>
-    <button onclick="closeCart()">Close</button>
+    <div id="cart-items-container">
+        <ul id="cart-items">
+            <?php display_cart($pdo); ?>
+        </ul>
+    </div>
+    <div id="cart-footer">
+        <button id="cart-close-button" onclick="closeCart()">Close</button>
+    </div>
 </div>
 
 <div id="add-product-modal" class="modal">

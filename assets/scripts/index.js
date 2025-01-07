@@ -9,8 +9,13 @@ function removeFromCart(productId) {
 }
 
 function displayCart() {
-    document.getElementById('cart-backdrop').style.display = 'block';
-    document.getElementById('cart-modal').style.display = 'block';
+    document.getElementById('cart-backdrop').style.display = 'flex';
+    document.getElementById('cart-modal').style.display = 'flex';
+}
+
+function closeCart() {
+    document.getElementById('cart-modal').style.display = 'none';
+    document.getElementById('cart-backdrop').style.display = 'none';
 }
 
 function deleteProduct(productId, event) {
@@ -53,9 +58,4 @@ window.onclick = function(event) {
             dropdown.style.display = "none";
         }
     }
-}
-
-function closeCart() {
-    document.getElementById('cart-backdrop').style.display = 'none';
-    document.getElementById('cart-modal').style.display = 'none';
 }
