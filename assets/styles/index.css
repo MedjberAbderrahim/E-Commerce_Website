@@ -29,6 +29,15 @@ header button:hover {
     background-color: #777;
 }
 
+body #messageBar {
+    background-color: #1e7e34;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    padding: 7px;
+}
+
 .modal {
     display: none;
     position: fixed;
@@ -188,33 +197,64 @@ header button:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
+    width: 80%;
+    height: 80%;
     padding: 20px;
     border: 1px solid #ddd;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
     z-index: 1000;
+    overflow-y: auto; /* Enable scrolling for long content */
+    border-radius: 10px;
+}
+
+#cart-modal h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
 }
 
 #cart-modal ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 #cart-modal li {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ddd;
     margin-bottom: 10px;
 }
 
-#cart-modal button {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
+#cart-modal li:last-child {
+    border-bottom: none; /* Remove border from the last item */
 }
 
-#cart-modal button:hover {
-    background-color: #c82333;
+.cart-item-image {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.cart-item-details h3 {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+.cart-item-details p {
+    font-size: 16px;
+    color: #555;
 }
 
 #cart-backdrop {
@@ -224,8 +264,39 @@ header button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     z-index: 999;
+}
+
+#cart-modal button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#cart-modal button:hover {
+    background-color: #0056b3;
+}
+
+.remove-from-cart {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    margin-left: 15px;
+}
+
+.remove-from-cart:hover {
+    background-color: #c82333;
 }
 
 #search-form {

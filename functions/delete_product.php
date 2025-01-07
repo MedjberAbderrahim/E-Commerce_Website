@@ -1,15 +1,11 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['username']) || $_SESSION['username'] != 'admin') {
-    echo "You don't have permission to delete products.";
-    exit();
-}
+if (!isset($_SESSION['username']) || $_SESSION['username'] != 'admin')
+    die("You don't have permission to delete products.");
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    echo "Invalid product ID.";
-    exit();
-}
+if (!isset($_GET['id']) || !is_numeric($_GET['id']))
+    die("Invalid product ID.");
 
 $productId = $_GET['id'];
 

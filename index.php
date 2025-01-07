@@ -1,22 +1,60 @@
 <?php
     session_start();
-    if (!isset($_SESSION["isLoggedIn"]) || !$_SESSION["isLoggedIn"]) {
+    if (!isset($_SESSION["isLoggedIn"]) ||
+        !$_SESSION["isLoggedIn"] ||
+        !isset($_SESSION["username"]) ||
+        !isset($_SESSION["userID"])
+    )
+    {
         header("Location: login.php");
     }
     include 'functions/Connect_DB.php';
-
     function load_products(PDO $pdo, $searchQuery = null) {
         if ($searchQuery) {
             $query = "SELECT * FROM Products WHERE Name LIKE :searchQuery";
             $stmt = $pdo->prepare($query);
             $stmt->bindValue(':searchQuery', '%' . $searchQuery . '%', PDO::PARAM_STR);
-        } else {
+        }
+        else {
             $query = "SELECT * FROM Products";
             $stmt = $pdo->prepare($query);
         }
 
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function load_cart(PDO $pdo) {
+        $query = "
+            SELECT p.id, p.Name, p.Price, p.Description, p.Image
+            FROM Cart c
+            INNER JOIN Products p ON c.Product_ID = p.id
+            WHERE c.User_ID = :userID
+        ";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindValue(':userID', $_SESSION['userID'], PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function display_cart(PDO $pdo) {
+        $cartItems = load_cart($pdo);
+        if (empty($cartItems)) {
+            echo '<li>Your cart is empty.</li>';
+            return;
+        }
+
+        foreach ($cartItems as $item) {
+            echo '<li class="cart-item">';
+            echo '<img src="' . htmlspecialchars($item['Image']) . '" alt="' . htmlspecialchars($item['Name']) . '" class="cart-item-image">';
+            echo '<div class="cart-item-details">';
+            echo '<h3>' . htmlspecialchars($item['Name']) . '</h3>';
+            echo '<p>$' . htmlspecialchars($item['Price']) . '</p>';
+            echo '</div>';
+            echo '<button class="remove-from-cart" onclick="removeFromCart(' . $item['id'] . ')">Remove</button>';
+            echo '</li>';
+        }
     }
 
     function displayProducts($pdo, $searchQuery = null) {
@@ -36,9 +74,9 @@
             echo '</div>';
 
             echo '<div class="product-buttons">';
-            echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ', event)">Add to Cart</button>';
+            echo '<button class="addToCart" onclick="addToCart(' . $product["id"] . ')">Add to Cart</button>';
             if ($_SESSION["username"] == 'admin') {
-                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ', event)">Delete</button>';
+                echo '<button class="delete" onclick="deleteProduct(' . $product["id"] . ')">Delete</button>';
             }
             echo '</div>';
             echo '</div>';
@@ -54,15 +92,19 @@
     <link rel="stylesheet" href="assets/styles/index.css">
 </head>
 <body>
+<?php
+    if (isset($_GET['message']))
+        echo '<div id="messageBar">' .htmlspecialchars($_GET['message']). '</div>';
+?>
 
 <header>
     <h1 id="TitleHeader">El-Wawi Store</h1>
     <h1 id="WelcomeHeader">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</h1>
     <div id="headerButtonsContainer">
-        <?php if ($_SESSION["username"] == 'admin') : ?>
-            <button id="add-product" onclick="showAddProductModal()">Add Product</button>
-        <?php endif; ?>
-        <button id="cart-btn">View Cart</button>
+        <?php if ($_SESSION["username"] == 'admin')
+            echo '<button id="add-product" onclick="showAddProductModal()">Add Product</button>';
+        ?>
+        <button id="cart-btn" onclick="displayCart()">View Cart</button>
         <div id="username-dropdown">
             <button id="username-btn" onclick="toggleDropdown()">Account</button>
             <div id="dropdown-menu" class="dropdown-content">
@@ -84,10 +126,12 @@
         <?php displayProducts($pdo, isset($_GET['query']) ? trim($_GET['query']) : null); ?>
     </div>
 </main>
+
 <div id="cart-backdrop"></div>
 <div id="cart-modal">
     <h2>Your Cart</h2>
     <ul id="cart-items">
+        <?php display_cart($pdo); ?>
     </ul>
     <button onclick="closeCart()">Close</button>
 </div>
