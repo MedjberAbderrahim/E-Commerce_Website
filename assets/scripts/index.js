@@ -47,7 +47,7 @@ function toggleDropdown() {
 
 function deleteAccount() {
     if (confirm("Are you sure you want to delete your account? All your data will be deleted and the deletion cannot be undone."))
-        window.location.href = "delete_account.php";
+        window.location.href = "functions/delete_account.php";
 }
 
 // When I click anywhere other than the dropdown menu, it disappears away
